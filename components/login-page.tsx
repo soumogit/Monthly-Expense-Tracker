@@ -62,7 +62,7 @@ export function LoginPage() {
               <span className="text-2xl">💰</span>
             </motion.div>
             <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
-              Login to Soumya's Expense Tracker
+              Login to Expense Tracker
             </CardTitle>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">Track your daily expenses with ease</p>
           </CardHeader>

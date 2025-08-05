@@ -16,6 +16,8 @@ import { expenseOperations, isSupabaseAvailable } from "./lib/supabase"
 import { getStoredIncome, storeIncome } from "./lib/income"
 import { useToast } from "@/hooks/use-toast"
 import { useAuth } from "./contexts/auth-context"
+import { WelcomePopup } from "./components/welcome-popup"
+import { BudgetingGuidelinePopup } from "./components/budgeting-guideline-popup"
 
 export default function ExpenseTracker() {
   const [expenses, setExpenses] = useState<DailyExpense[]>([])
@@ -27,6 +29,8 @@ export default function ExpenseTracker() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const [isIncomeModalOpen, setIsIncomeModalOpen] = useState(false)
+  const [showWelcomePopup, setShowWelcomePopup] = useState(false)
+  const [showBudgetingGuidelinePopup, setShowBudgetingGuidelinePopup] = useState(false)
   const { toast } = useToast()
   const { user, logout } = useAuth()
 
@@ -47,6 +51,20 @@ export default function ExpenseTracker() {
         // Load expenses
         const data = await expenseOperations.getAllExpenses(user.username)
         setExpenses(data)
+
+        if (user) {
+          const hasSeenWelcome = localStorage.getItem(`hasSeenWelcome_${user.username}`)
+          if (!hasSeenWelcome) {
+            setShowWelcomePopup(true)
+            localStorage.setItem(`hasSeenWelcome_${user.username}`, "true")
+          }
+
+          const hasSeenBudgetingGuideline = localStorage.getItem(`hasSeenBudgetingGuideline_${user.username}`)
+          if (!hasSeenBudgetingGuideline) {
+            setShowBudgetingGuidelinePopup(true)
+            localStorage.setItem(`hasSeenBudgetingGuideline_${user.username}`, "true")
+          }
+        }
       } catch (error) {
         console.error("Error loading data:", error)
         toast({
@@ -153,6 +171,10 @@ export default function ExpenseTracker() {
   }
 
   const handleLogout = () => {
+    if (user) {
+      localStorage.removeItem(`hasSeenWelcome_${user.username}`)
+      localStorage.removeItem(`hasSeenBudgetingGuideline_${user.username}`)
+    }
     logout()
     toast({
       title: "Logged out",
@@ -330,6 +352,15 @@ export default function ExpenseTracker() {
           onClose={() => setIsIncomeModalOpen(false)}
           income={income}
           onSave={handleIncomeUpdate}
+        />
+        <WelcomePopup
+          isOpen={showWelcomePopup}
+          onClose={() => setShowWelcomePopup(false)}
+          username={user.displayName}
+        />
+        <BudgetingGuidelinePopup
+          isOpen={showBudgetingGuidelinePopup}
+          onClose={() => setShowBudgetingGuidelinePopup(false)}
         />
       </div>
     </div>

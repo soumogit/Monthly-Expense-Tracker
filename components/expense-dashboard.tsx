@@ -5,19 +5,6 @@ import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
-import {
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from "recharts"
 import { Trash2, Loader2 } from "lucide-react"
 import type { DailyExpense, MonthlyStats } from "../types/expense"
 import { getCategoryData, getAggregatedDailyData, formatSafeDate } from "../utils/calculations"
@@ -111,79 +98,6 @@ export function ExpenseDashboard({
         ))}
       </div>
 
-      {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <Card className="shadow-lg">
-            <CardHeader>
-              <CardTitle>Category Distribution</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {categoryData.length > 0 ? (
-                <ResponsiveContainer width="100%" height={300}>
-                  <PieChart>
-                    <Pie
-                      data={categoryData}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                      outerRadius={80}
-                      fill="#8884d8"
-                      dataKey="value"
-                    >
-                      {categoryData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip formatter={(value) => [`₹${value}`, "Amount"]} />
-                  </PieChart>
-                </ResponsiveContainer>
-              ) : (
-                <div className="h-[300px] flex items-center justify-center text-gray-500">
-                  No expense data available
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          <Card className="shadow-lg">
-            <CardHeader>
-              <CardTitle>Daily Spending Trend</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {dailyTrend.length > 0 ? (
-                <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={dailyTrend}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="date" />
-                    <YAxis />
-                    <Tooltip formatter={(value) => [`₹${value}`, "Amount"]} />
-                    <Legend />
-                    <Line type="monotone" dataKey="spending" stroke="#8884d8" name="Daily Spending" />
-                    <Line type="monotone" dataKey="total" stroke="#82ca9d" name="Total (incl. investments)" />
-                  </LineChart>
-                </ResponsiveContainer>
-              ) : (
-                <div className="h-[300px] flex items-center justify-center text-gray-500">
-                  No spending data available
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </motion.div>
-      </div>
-
       {/* Expense Table */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -209,6 +123,7 @@ export function ExpenseDashboard({
                       <TableHead>🚗 Transport</TableHead>
                       <TableHead>💊 Medical</TableHead>
                       <TableHead>🛍️ Shopping</TableHead>
+                      <TableHead>💳 Credit Card Bill</TableHead>
                       <TableHead>📝 Others</TableHead>
                       <TableHead>💰 Investment</TableHead>
                       <TableHead>🚨 Emergency</TableHead>
@@ -236,6 +151,7 @@ export function ExpenseDashboard({
                         <TableCell>₹{expense.transport || 0}</TableCell>
                         <TableCell>₹{expense.medical || 0}</TableCell>
                         <TableCell>₹{expense.shopping || 0}</TableCell>
+                        <TableCell>₹{expense.creditCardBill || 0}</TableCell>
                         <TableCell>₹{expense.others || 0}</TableCell>
                         <TableCell>₹{expense.investment || 0}</TableCell>
                         <TableCell>₹{expense.emergencyFund || 0}</TableCell>
