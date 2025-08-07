@@ -12,13 +12,9 @@ Any changes you make to your deployed app will be automatically pushed to this r
 
 Your project is live at:
 
-**[https://vercel.com/soumodip-ghoshs-projects-c9c05ebf/v0-expense-tracking-app](https://vercel.com/soumodip-ghoshs-projects-c9c05ebf/v0-expense-tracking-app)**
+**[https://vercel.com/soumodip-ghoshs-projects-c9c05ebf/v0-expense-tracking-app](https://monthlyexpensestracker.vercel.app/)**
 
-## Build your app
 
-Continue building your app on:
-
-**[https://v0.dev/chat/projects/zpRwRLgmZLI](https://v0.dev/chat/projects/zpRwRLgmZLI)**
 
 ## How It Works
 
