@@ -2,9 +2,7 @@
 
 *Automatically synced with your [v0.dev](https://v0.dev) deployments*
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/soumodip-ghoshs-projects-c9c05ebf/v0-expense-tracking-app)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/zpRwRLgmZLI)
-
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://monthlyexpensestracker.vercel.app/)
 ## Overview
 
 This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
